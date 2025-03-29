@@ -27,7 +27,7 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
   }, []);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: NodeJS.Timeout | undefined;
     if (isRunning && timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
@@ -35,7 +35,10 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
     } else if (timeLeft === 0) {
       endTest();
     }
-    return () => clearInterval(timer);
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [isRunning, timeLeft]);
 
   const startTest = () => {
@@ -47,20 +50,22 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
   };
 
   const calculateWPM = (input: string, timeElapsed: number) => {
-    const words = input.trim().split(" ").length;
+    const words = input.trim().split(/\s+/).length;
     const minutes = timeElapsed / 60;
-    return Math.round(words / minutes);
+    return minutes > 0 ? Math.round(words / minutes) : 0;
   };
 
   const calculateAccuracy = (input: string, errors: number[]) => {
     const totalChars = input.length;
     const errorCount = errors.length;
-    return Math.round(((totalChars - errorCount) / totalChars) * 100);
+    return totalChars > 0
+      ? Math.round(((totalChars - errorCount) / totalChars) * 100)
+      : 100;
   };
 
   const endTest = async () => {
     setIsRunning(false);
-    if (!startTime) return;
+    if (!startTime || !user?.id) return;
 
     const timeElapsed = (Date.now() - startTime) / 1000;
     const wpm = calculateWPM(input, timeElapsed);
@@ -74,7 +79,7 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
       typingDurations: [],
       duration,
       text,
-      userId: user?.id,
+      userId: user.id,
     };
 
     setResults(testResults);
@@ -92,7 +97,7 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
     const newInput = e.target.value;
     setInput(newInput);
 
-    const newErrors = [];
+    const newErrors: number[] = [];
     const inputChars = newInput.split("");
     const textChars = text.split("");
 

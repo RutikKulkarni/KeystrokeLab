@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,8 +17,14 @@ function App() {
           <div className="container mx-auto px-4 py-8">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route
+                path="/login"
+                element={<ProtectedRoute element={<Login />} />}
+              />
+              <Route
+                path="/register"
+                element={<ProtectedRoute element={<Register />} />}
+              />
               <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
           </div>

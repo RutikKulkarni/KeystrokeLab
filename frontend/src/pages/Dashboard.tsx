@@ -77,13 +77,21 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome back, {user?.username}!
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Track your typing progress and performance
-        </p>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Welcome back, {user?.username}!
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Track your typing progress and performance
+          </p>
+        </div>
+        <button
+          onClick={() => navigate("/")}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md"
+        >
+          Give the Test
+        </button>
       </div>
 
       {error && (
