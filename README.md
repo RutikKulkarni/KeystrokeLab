@@ -96,7 +96,7 @@ Frontend:
 
 ```bash
 cd frontend
-npm run dev
+npm run start
 ```
 
 ## API Endpoints
