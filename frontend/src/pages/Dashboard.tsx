@@ -26,25 +26,32 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     navigate("/login");
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!isAuthenticated || !user) {
+      navigate("/login");
+      return;
+    }
 
-  //   const fetchSessions = async () => {
-  //     try {
-  //       const response = await apiClient.get(`/sessions/${user.id}`);
-  //       setSessions(response.data);
-  //     } catch (err) {
-  //       setError("Failed to load your typing history");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    const fetchSessions = async () => {
+      try {
+        // const response = await apiClient.get(`/sessions/${user.id}`);
+        const response = await fetch(
+          `https://keystrokelab.onrender.com/api/sessions/${user.id}`
+        );
+        const data = await response.json();
+        setSessions(data);
 
-  //   fetchSessions();
-  // }, [user, isAuthenticated, navigate]);
+        console.log("Users ID:", user.id);
+        // setSessions(response.data);
+      } catch (err) {
+        setError("Failed to load your typing history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSessions();
+  }, [user, isAuthenticated, navigate]);
 
   const calculateStats = () => {
     if (sessions.length === 0)

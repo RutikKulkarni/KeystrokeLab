@@ -85,7 +85,12 @@ const TypingTest: React.FC<TypingTestProps> = ({ duration }) => {
     setResults(testResults);
 
     try {
-      await apiClient.post("/sessions", testResults);
+      // await apiClient.post("/sessions", testResults);
+      await fetch("https://keystrokelab.onrender.com/api/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(testResults),
+      });
     } catch (error) {
       console.error("Error saving results:", error);
     }
