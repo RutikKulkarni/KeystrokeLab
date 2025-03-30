@@ -2,7 +2,7 @@
 
 KeystrokeLab is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that offers an advanced typing test experience. Users can take timed typing tests, track their performance metrics, and receive psychological insights based on their typing patterns.
 
-Live Demo: [KeystrokeLab](https://abc.com)
+Live Demo: [KeystrokeLab](https://keystroke-lab.vercel.app/)
 
 ## Features
 
