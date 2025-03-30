@@ -26,25 +26,25 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/login");
+  //     return;
+  //   }
 
-    const fetchSessions = async () => {
-      try {
-        const response = await apiClient.get(`/sessions/${user.id}`);
-        setSessions(response.data);
-      } catch (err) {
-        setError("Failed to load your typing history");
-      } finally {
-        setLoading(false);
-      }
-    };
+  //   const fetchSessions = async () => {
+  //     try {
+  //       const response = await apiClient.get(`/sessions/${user.id}`);
+  //       setSessions(response.data);
+  //     } catch (err) {
+  //       setError("Failed to load your typing history");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchSessions();
-  }, [user, isAuthenticated, navigate]);
+  //   fetchSessions();
+  // }, [user, isAuthenticated, navigate]);
 
   const calculateStats = () => {
     if (sessions.length === 0)
